@@ -14,6 +14,21 @@ router.get('/dogs', async (req, res) => {
     `);
     const dogsWithPhoto = await Promise.all(
       rows.map(async (dog) => {
+        try {
+          const response = await axios.get(`https://dog.ceo/api/breed/${dog.dog_name.toLowerCase()}/images/random`);
+          return {
+            ...dog,
+            photo: response.data.message
+          };
+        } catch (error) {
+          console.error(`Error fetching photo for dog ${dog.dog_name}:`, error);
+          return {
+            ...dog,
+            photo: null // Fallback if photo fetch fails
+          };
+        }
+      })
+    );
 
 
 
