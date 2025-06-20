@@ -84,6 +84,15 @@
         const error = ref('');
 
         async function loadWalks() {
+          try {
+            const res = await fetch('/api/walks/owner', { credentials: 'include' });
+            if (!res.ok) throw new Error('Failed to load walks');
+            walks.value = await res.json();
+          } catch (err) {
+            error.value = err.message;
+            walks.value = [];
+          }
+        }
 
         async function submitWalkRequest() {
           try {
