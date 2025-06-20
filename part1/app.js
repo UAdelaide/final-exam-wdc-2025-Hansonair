@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 创建数据库连接
+
 let db;
 (async () => {
   try {
