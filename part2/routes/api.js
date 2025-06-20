@@ -18,6 +18,7 @@ router.get('/dogs', async (req, res) => {
       ...dog,
       photo_url: photoUrl
     }));
+    res.json(dogsWithPhoto);
 
 
 
