@@ -23,7 +23,7 @@ router.get('/dogs', async (req, res) => {
         } catch (error) {
           return {
             ...dog,
-            photo: null 
+            photo: null // Fallback if photo fetch fails
           };
         }
       })
