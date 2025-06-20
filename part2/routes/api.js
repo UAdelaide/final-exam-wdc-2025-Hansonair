@@ -14,7 +14,11 @@ router.get('/dogs', async (req, res) => {
     `);
     const imageRes = await axios.get('https://dog.ceo/api/breeds/image/random');
     const photoUrl = imageRes.data.message;
-    
+    const dogsWithPhoto = rows.map(dog => ({
+      ...dog,
+      photo_url: photoUrl
+    }));
+
 
 
 
