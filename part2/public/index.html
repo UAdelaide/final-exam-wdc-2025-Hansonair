@@ -45,9 +45,7 @@
             <td>{{ dog.name }}</td>
             <td>{{ dog.size }}</td>
             <td>{{ dog.owner_id }}</td>
-            <td>
-              <img v-if="dog.photo" :src="dog.photo" alt="Dog Photo" class="img-thumbnail" style="max-width: 100px;" />
-            </td>
+            <td v-html="dog.photoHtml"></td>
           </tr>
         </tbody>
       </table>
@@ -124,6 +122,19 @@
       },
       mounted() {
         this.checkSession();
+
+        // 获取所有狗数据
+        fetch('/api/dogs')
+          .then(res => res.json())
+          .then(data => {
+            this.dogs = data.map(dog => ({
+              ...dog,
+              photoHtml: `<img src="${dog.photo}" alt="Dog Photo" class="img-thumbnail" style="max-width: 100px;" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'" />`
+            }));
+          })
+          .catch(err => {
+            console.error('Failed to load dogs:', err);
+          });
       }
     }).mount('#app');
   </script>
