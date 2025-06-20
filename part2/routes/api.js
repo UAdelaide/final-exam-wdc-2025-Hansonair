@@ -12,6 +12,8 @@ router.get('/dogs', async (req, res) => {
       FROM Dogs d
       JOIN Users u ON d.owner_id = u.user_id
     `);
+    const imageRes = await axios.get('https://dog.ceo/api/breeds/image/random');
+    const photoUrl = imageRes.data.message;
     
 
 
