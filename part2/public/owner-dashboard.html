@@ -149,6 +149,7 @@
               return;
             }
             loadWalks();
+            loadDogs();
           } catch {
             window.location.href = '/index.html';
           }
@@ -160,7 +161,8 @@
           message,
           error,
           submitWalkRequest,
-          logout
+          logout,
+          dogs
         };
       }
     }).mount('#app');
