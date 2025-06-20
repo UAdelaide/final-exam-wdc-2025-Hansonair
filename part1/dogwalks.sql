@@ -77,3 +77,12 @@ VALUES
 ((SELECT dog_id FROM Dogs WHERE name = 'Charlie' AND owner_id = (SELECT user_id FROM Users WHERE username = 'emily123')), '2025-06-11 07:00:00', 60, 'Hillside Park', 'open'),
 ((SELECT dog_id FROM Dogs WHERE name = 'Luna' AND owner_id = (SELECT user_id FROM Users WHERE username = 'alice123')), '2025-06-11 10:15:00', 30, 'City', 'completed'),
 ((SELECT dog_id FROM Dogs WHERE name = 'Hanson' AND owner_id = (SELECT user_id FROM Users WHERE username = 'carol123')), '2025-06-12 15:00:00', 40, 'River', 'cancelled');
+
+INSERT INTO WalkRatings (request_id, walker_id, owner_id, rating, comments)
+VALUES (
+  (SELECT request_id FROM WalkRequests WHERE dog_id = (SELECT dog_id FROM Dogs WHERE name = 'Max')),
+  (SELECT user_id FROM Users WHERE username = 'bobwalker'),
+  (SELECT user_id FROM Users WHERE username = 'alice123'),
+  5,
+  'Wonderful walk! My dog was so happy!'
+);
