@@ -13,7 +13,8 @@ app.use(session({
   secret: 'superSecretKey',
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false }
+  cookie: { secure: false, path: '/' }
+
 }));
 
 // Routes
