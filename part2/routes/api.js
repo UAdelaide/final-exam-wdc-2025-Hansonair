@@ -15,7 +15,7 @@ router.get('/dogs', async (req, res) => {
     const dogsWithPhoto = await Promise.all(
       rows.map(async (dog) => {
         try {
-          const response = await axios.get(`https://dog.ceo/api/breed/${dog.dog_name.toLowerCase()}/images/random`);
+          const response = await axios.get('https://dog.ceo/api/breeds/image/random');
           return {
             ...dog,
             photo: response.data.message
