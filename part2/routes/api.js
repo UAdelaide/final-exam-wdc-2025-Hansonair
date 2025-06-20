@@ -21,10 +21,9 @@ router.get('/dogs', async (req, res) => {
             photo: response.data.message
           };
         } catch (error) {
-          console.error(`Error fetching photo for dog ${dog.dog_name}:`, error);
           return {
             ...dog,
-            photo: null // Fallback if photo fetch fails
+            photo: null 
           };
         }
       })
