@@ -1,12 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mysql = require('mysql2/promise');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const apiRouter = require('./routes/api');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -14,7 +16,31 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 创建数据库连接
+let db;
+(async () => {
+  try {
+    db = await mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: '', // ← 这里换成你的真实密码
+      database: 'DogWalkService'
+    });
+    console.log('✅ MySQL connected!');
+  } catch (err) {
+    console.error('❌ DB connection error:', err.message);
+  }
+})();
+
+// 注入数据库连接到每个请求中
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+
+// 路由部分
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/api', apiRouter); // ← 加上这一句！
 
 module.exports = app;
