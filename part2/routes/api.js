@@ -64,4 +64,24 @@ router.get('/walkers/summary', async (req, res) => {
   }
 });
 
+router.get('/mydogs', async (req, res) => {
+  try {
+    if (!req.session || !req.session.user) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const ownerId = req.session.user.user_id;
+
+    const [rows] = await req.db.execute(`
+      SELECT dog_id, name
+      FROM Dogs
+      WHERE owner_id = ?
+    `, [ownerId]);
+
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
