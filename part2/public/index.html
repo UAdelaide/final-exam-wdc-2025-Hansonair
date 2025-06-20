@@ -54,9 +54,7 @@
 
 
 
-    <div v-else class="text-success">
-      <p>You are already logged in. Redirecting...</p>
-    </div>
+
   </div>
 
 
@@ -130,7 +128,7 @@
               dog_id: dog.dog_id,
               name: dog.dog_name,
               size: dog.size,
-              owner_id: dog.owner_id, 
+              owner_id: dog.owner_id,
               photoHtml: `<img src="${dog.photo_url}" alt="Dog Photo" class="img-thumbnail" style="max-width: 100px;" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'" />`
             }));
           })
