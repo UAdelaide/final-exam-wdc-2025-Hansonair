@@ -123,7 +123,6 @@
       mounted() {
         this.checkSession();
 
-        // 获取所有狗数据
         fetch('/api/dogs')
           .then(res => res.json())
           .then(data => {
