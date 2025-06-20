@@ -129,8 +129,8 @@
             this.dogs = data.map(dog => ({
               dog_id: dog.dog_id,
               name: dog.dog_name,
-              ...dog,
-              name: dog.dog_name,
+              size: dog.size,
+              owner: dog.owner_username,
               photoHtml: `<img src="${dog.photo_url}" alt="Dog Photo" class="img-thumbnail" style="max-width: 100px;" onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'" />`
             }));
           })
