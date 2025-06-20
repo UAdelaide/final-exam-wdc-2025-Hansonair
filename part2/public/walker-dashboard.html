@@ -91,7 +91,10 @@
               return;
             }
             await loadWalkRequests();
-            
+          } catch {
+            window.location.href = '/index.html';
+          }
+          
 
 
 
