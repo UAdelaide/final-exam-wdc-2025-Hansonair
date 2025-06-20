@@ -1,65 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Dog of the Day</title>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <style>
-    /* 故意破坏认知与可用性 */
-    body {
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      background: radial-gradient(circle, red, yellow, green);
-      color: lime;
-      animation: flash 0.4s infinite;
-    }
-    @keyframes flash {
-      0% { background-color: red; }
-      50% { background-color: blue; }
-      100% { background-color: red; }
-    }
-    button {
-      font-size: 2em;
-      margin-top: 500px;
-      color: red;
-      background-color: yellow;
-      border: 5px dotted black;
-    }
-    img {
-      width: 1000px;
-      height: auto;
-      border: 10px dashed pink;
-    }
-  </style>
-</head>
-<body>
-  <div id="app">
-    <h1 style="font-size: 5em; transform: rotate(20deg);">Dog of the Day!</h1>
-    <button @click="fetchDog">Click Me to Maybe See a Dog</button>
-    <div v-if="dogImage">
-      <img :src="dogImage" alt="">
-      <p><b>This dog’s name is Borky and he loves to jump on mailmen!</b></p>
-    </div>
-  </div>
-
-  <script>
-    const { createApp } = Vue;
-
-    createApp({
-      data() {
-        return {
-          dogImage: null
-        };
-      },
-      methods: {
-        fetchDog() {
-          fetch('https://dog.ceo/api/breeds/image/random')
-            .then(response => response.json())
-            .then(data => {
-              this.dogImage = data.message;
-            });
-        }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dog of the Day</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      body {
+        background: #b5e3e7;
+        color: #b6e3e7;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        margin: 0;
       }
-    }).mount('#app');
-  </script>
-</body>
+      .container {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 60vw;
+        padding: 4em 1em;
+      }
+      .marquee {
+        width: 100vw;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 3em;
+        animation: scroll 8s linear infinite;
+        color: #eee7b5;
+        background: #eeb5b6;
+        text-shadow: 1px 1px 2px #f00;
+      }
+      @keyframes scroll {
+        0% { transform: translateX(100vw); }
+        100% { transform: translateX(-100vw); }
+      }
+      .dog-section {
+        width: 30vw;
+        border: 7px dotted #eeb5b6;
+        background: #fff6;
+        padding: 2vw 2vw 0.5vw 2vw;
+        margin-bottom: 10vw;
+        text-align: left;
+      }
+      button {
+        width: 30px;
+        height: 18px;
+        font-size: 9px;
+        margin-left: 400px;
+      }
+      img {
+        max-width: 100%;
+        border-radius: 25px 2px 50px 0/80px 0 12px 90px;
+        filter: blur(1.5px) brightness(80%) grayscale(30%);
+      }
+      button:focus { outline: none; }
+      .dog-info {
+        font-size: 1.4em;
+        line-height: 0.9;
+        letter-spacing: 0.15em;
+        background: #b5e3e7;
+        color: #b6e3e7;
+        border-bottom: 1px dashed #eeb5b6;
+        padding: 0.2em;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const { createApp, ref } = Vue;
+      createApp({
+        setup() {
+          const imgUrl = ref('');
+          const loading = ref(false);
+          const dogNames = [
+            'Rex', 'Fluffy', 'Woofie', 'Sir Barkalot', 'Professor Wags', 'Doge', 'Cheems', 'Pupperino'
+          ];
+          const dogName = ref(dogNames[Math.floor(Math.random() * dogNames.length)]);
+          const fetchDog = async () => {
+            loading.value = true;
+            try {
+              const res = await fetch('https://dog.ceo/api/breeds/image/random');
+              const data = await res.json();
+              imgUrl.value = data.message;
+            } catch (e) {
+              imgUrl.value = '';
+            }
+            loading.value = false;
+          };
+          fetchDog();
+          return { imgUrl, loading, dogName, fetchDog };
+        },
+        template: `
+          <div>
+            <div class="marquee">🐶 Today's Dog of the Day! (Can you even see me?) 🐾</div>
+            <div class="container">
+              <div class="dog-section">
+                <div class="dog-info">Name: {{ dogName }}</div>
+                <div class="dog-info">Breed: [Unknown]</div>
+                <div class="dog-info">Fun Fact: Dogs bark!</div>
+                <button @click="fetchDog" aria-hidden="true" tabindex="-1">NEW DOG</button>
+                <div v-if="loading">Loading...</div>
+                <img v-if="imgUrl" :src="imgUrl" />
+              </div>
+              <div style="font-size:2em;rotate:12deg;margin-top:10vw;">
+                <ul>
+                  <li>Click “NEW DOG” to change dog</li>
+                  <li>But the button很小还很远！</li>
+                  <li>颜色/对比度/结构都乱七八糟！</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      }).mount("#app")
+    </script>
+  </body>
 </html>
