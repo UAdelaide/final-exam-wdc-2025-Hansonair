@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const router = express.Router();
 
 router.get('/dogs', async (req, res) => {
@@ -12,6 +13,10 @@ router.get('/dogs', async (req, res) => {
       JOIN Users u ON d.owner_id = u.user_id
     `);
     res.json(rows);
+
+
+
+    
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
