@@ -23,24 +23,23 @@ let db;
     db = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
-      password: '', // ← 这里换成你的真实密码
+      password: '',
       database: 'DogWalkService'
     });
-    console.log('✅ MySQL connected!');
+    console.log(' MySQL connected!');
   } catch (err) {
-    console.error('❌ DB connection error:', err.message);
+    console.error('DB connection error:', err.message);
   }
 })();
 
-// 注入数据库连接到每个请求中
 app.use((req, res, next) => {
   req.db = db;
   next();
 });
 
-// 路由部分
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api', apiRouter); // ← 加上这一句！
+app.use('/api', apiRouter);
 
 module.exports = app;
