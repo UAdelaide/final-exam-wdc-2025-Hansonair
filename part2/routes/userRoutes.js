@@ -50,10 +50,20 @@ router.post('/login', async (req, res) => {
     }
 
     req.session.user = rows[0];
-    res.json({ message: 'Login successful', role: rows[0].role }); 
+    res.json({ message: 'Login successful', role: rows[0].role });
   } catch (error) {
     res.status(500).json({ error: 'Login failed' });
   }
+});
+
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+    res.clearCookie('connect.sid'); 
+    res.json({ message: 'Logged out successfully' });
+  });
 });
 
 module.exports = router;
