@@ -12,18 +12,7 @@ router.get('/dogs', async (req, res) => {
       FROM Dogs d
       JOIN Users u ON d.owner_id = u.user_id
     `);
-
-    const dogsWithPhotos = await Promise.all(rows.map(async (dog) => {
-      try {
-        const response = await axios.get('https://dog.ceo/api/breeds/image/random');
-        dog.photo = response.data.message;
-      } catch (err) {
-        dog.photo = ''；
-      }
-      return dog;
-    }));
-
-    res.json(dogsWithPhotos);
+    res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
