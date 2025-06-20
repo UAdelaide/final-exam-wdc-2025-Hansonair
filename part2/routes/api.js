@@ -18,7 +18,7 @@ router.get('/dogs', async (req, res) => {
           const response = await axios.get('https://dog.ceo/api/breeds/image/random');
           return {
             ...dog,
-            
+            photo_url: response.data.message
           };
         } catch (error) {
           return {
