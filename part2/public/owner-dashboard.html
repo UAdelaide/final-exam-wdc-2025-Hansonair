@@ -114,6 +114,22 @@
             message.value = '';
           }
         }
+        async function logout() {
+  try {
+    const res = await fetch('/api/users/logout', {
+      method: 'POST',
+      credentials: 'include'
+    });
+    if (res.ok) {
+      window.location.href = '/index.html';
+    } else {
+      const data = await res.json();
+      error.value = data.error || 'Logout failed';
+    }
+  } catch (err) {
+    error.value = 'Network error during logout';
+  }
+}
 
         onMounted(() => {
           loadWalks();
