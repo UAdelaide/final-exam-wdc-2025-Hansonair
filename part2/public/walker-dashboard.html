@@ -75,6 +75,26 @@
             message.value = '';
           }
         }
+        async function logout() {
+          try {
+            await fetch('/api/users/logout', { method: 'POST', credentials: 'include' });
+            window.location.href = '/index.html';
+          } catch {
+            alert('Logout failed');
+          }
+        }
+        onMounted(async () => {
+          try {
+            const res = await fetch('/api/users/me');
+            if (!res.ok) {
+              window.location.href = '/index.html';
+              return;
+            }
+            loadWalks();
+          } catch {
+            window.location.href = '/index.html';
+          }
+        });
 
         onMounted(() => {
           loadWalkRequests();
