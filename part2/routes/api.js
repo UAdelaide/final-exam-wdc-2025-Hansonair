@@ -12,8 +12,8 @@ router.get('/dogs', async (req, res) => {
       FROM Dogs d
       JOIN Users u ON d.owner_id = u.user_id
     `);
-        const dogsWithPhoto = await Promise.all(
-
+    const dogsWithPhoto = await Promise.all(
+      rows.map(async (dog) => {
 
 
 
