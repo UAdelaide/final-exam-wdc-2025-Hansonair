@@ -27,29 +27,9 @@
       </form>
       <div v-if="error" class="alert alert-danger mt-3">{{ error }}</div>
     </div>
-        <div v-if="dogs.length">
-      <h2 class="mt-5">All Registered Dogs</h2>
-      <table class="table table-bordered shadow-sm bg-white mt-3">
-        <thead class="table-light">
-          <tr>
-            <th>Dog ID</th>
-            <th>Name</th>
-            <th>Size</th>
-            <th>Owner ID</th>
-            <th>Photo</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="dog in dogs" :key="dog.dog_id">
-            <td>{{ dog.dog_id }}</td>
-            <td>{{ dog.dog_name }}</td>
-            <td>{{ dog.size }}</td>
-            <td>{{ dog.owner_id }}</td>
-            <td><img :src="dog.photo" alt="Dog" class="img-thumbnail" style="height: 100px;" /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    
+
+
 
 
     <div v-else class="text-success">
