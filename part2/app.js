@@ -20,6 +20,7 @@ app.use(session({
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
 const userRoutes = require('./routes/userRoutes');
+const apiRouter = require('./routes/api');
 
 
 app.use('/api/walks', walkRoutes);
